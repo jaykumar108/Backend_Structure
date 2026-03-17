@@ -7,6 +7,7 @@ import express from 'express';
 import cors from 'cors';
 import connectDB from './config/database';
 import routes from './routes';
+import logger from './utils/logger';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,12 +21,12 @@ app.use('/api', routes);
 const startServer = async (): Promise<void> => {
   await connectDB();
   app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    logger.info(`Server running on http://localhost:${PORT}`);
   });
 };
 
 startServer().catch((err) => {
-  console.error('Failed to start server:', err);
+  logger.error('Failed to start server:', err);
   process.exit(1);
 });
 
